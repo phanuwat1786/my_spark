@@ -1,0 +1,30 @@
+<configuration>
+    <property>
+        <name>dfs.replication</name>
+        <value>2</value>
+    </property>
+    <property>
+        <name>dfs.namenode.name.dir</name>
+        <value>/hadoop/hdfs/nameNode</value>
+    </property>
+    <property>
+        <name>dfs.data.dir</name>
+        <value>/opt/hadoop/data/dataNode</value>
+    </property>
+    <property>
+        <name>dfs.permissions.enabled</name>
+        <value>true</value>
+    </property>
+    <property>
+        <name>dfs.umaskmode</name>
+        <value>000</value>
+    </property>
+    <property>
+        <name>fs.permissions.umask-mode</name>
+        <value>000</value>
+    </property>
+    <property>
+        <name>dfs.permissions.superusergroup</name>
+        <value>hadoop</value>
+    </property>
+</configuration>

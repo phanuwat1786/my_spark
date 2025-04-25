@@ -2,3 +2,5 @@ pandas
 pendulum
 requests
 faker
+notebook
+py4j

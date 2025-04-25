@@ -1,0 +1,5 @@
+pandas
+pendulum
+requests
+faker
+pyspark==3.5.5

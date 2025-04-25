@@ -1,0 +1,17 @@
+version: '3'
+services:
+  jupyter:
+    build: 
+      context: .
+      dockerfile: ./Dockerfile
+    volumes:
+      - ../spark/jobs:/home/jovyan/work
+    ports:
+      - 3333:8888
+    command: "start-notebook.sh --NotebookApp.token="
+    networks:
+      - hdfs_network
+
+networks:
+  hdfs_network:
+    external: true

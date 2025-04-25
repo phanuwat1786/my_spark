@@ -1,0 +1,46 @@
+x-spark-common: &spark-common
+  image: my_spark:latest
+  networks:
+    - hdfs_network
+
+services:
+  jupyter:
+    <<: *spark-common
+    volumes:
+      - ./jobs:/opt/bitnami/spark/jobs
+    ports:
+      - 3333:8888
+    command: ["jupyter", "notebook","--notebook-dir=/opt/bitnami/spark/jobs", "--ip=0.0.0.0", "--port=8888", "--no-browser", "--allow-root"]
+    networks:
+      - hdfs_network
+
+  spark-master:
+    <<: *spark-common
+    container_name: spark-master
+    volumes:
+      - ./jobs:/opt/bitnami/spark/jobs
+      # - ./config/spark-defaults.conf:/obt/bitnami/spark/conf/spark-defaults.conf
+    ports:
+      - "8080:8080"
+      - "8888:7077"
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:8080" ]
+      interval: 5s
+      timeout: 3s
+      retries: 3
+  
+  spark-woker:
+    <<: *spark-common
+    environment:
+      SPARK_MODE: worker
+      SPARK_WORKER_CORES: 4
+      SPARK_WORKER_MEMORY: 4g
+    depends_on:
+      spark-master:
+        condition: service_healthy
+  
+
+
+networks:
+  hdfs_network:
+    external: true
